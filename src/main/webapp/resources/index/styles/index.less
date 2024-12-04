@@ -1,0 +1,74 @@
+@import "clock.css";
+
+.font-names {
+  @font-face {
+    font-family: 'Rostov';
+    src: url('../../fonts/Rostov.ttf') format('truetype');
+  }
+}
+
+
+
+@main-background: #414141;
+@element-background: #721c1c;
+@text-color: #131821;
+@green-status: #00b509;
+@red-status: #b50300;
+
+
+//Some mixins
+.shadowing{
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.19);
+}
+
+.shadowing-strong{
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.bordering{
+  background-color: @main-background;
+  border-radius: 7px;
+  border: 2px solid @text-color;
+}
+
+*{
+  font-family: 'Rostov', serif;
+  font-size: 1.05em;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 16px;
+  position: relative;
+  transition: all ease 0.2s;
+  background-color: @main-background;
+  color: @text-color;
+}
+
+header{
+  font-size: 2.5em;
+  text-align: center;
+  text-shadow: 0 0 30px rgba(204, 204, 204, 0.35);
+}
+
+input{
+  &.surfing-button{
+    transition: all ease 0.3s;
+    .bordering();
+    .shadowing();
+    padding: 0.5rem 1rem;
+    font-size: 1.2em;
+    margin-right: 1%;
+    color: #d7d7d7;
+    &:hover{
+      .shadowing-strong();
+      background-color: #f00;
+    }
+  }
+}

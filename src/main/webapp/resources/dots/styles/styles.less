@@ -1,0 +1,169 @@
+@path-fonts:    '../../fonts';
+.font-names {
+  @font-face {
+    font-family: 'Rostov';
+    src: url('@{path-fonts}/Rostov.ttf') format('truetype');
+  }
+}
+
+* {
+  font-family: 'Rostov', serif;
+  font-weight: normal;
+  font-size: 1.05em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+@main-background: #c5c5c5;
+@element-background: #684b8c;
+@text-color: #222831;
+@green-status: #00b509;
+@red-status: #b50300;
+
+.shadowing {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.bordering {
+  background-color: @main-background;
+  border-radius: 7px;
+  border: 2px solid @text-color;
+}
+
+// ----
+
+body {
+  background-color: @main-background;
+  padding: 0 20px 20px 20px;
+  color: @text-color;
+}
+
+header {
+  font-size: 2.0em;
+  font-family: 'Rostov', Serif, serif;
+  text-align: center;
+}
+
+.form-label {
+  span {
+    margin: 10px 2px 5px 2px;
+    font-size: 1.2em;
+  }
+}
+
+body .ui-slider .ui-slider-handle:hover {
+  background-color: #c6aec7;
+  border: 2px solid @element-background;
+}
+
+body .slider .ui-slider-range {
+  background-color: @element-background; /* Задайте цвет заполненной части */
+  border-radius: 5px; /* Скругленные края */
+  transition: background-color 0.3s ease; /* Плавный переход при изменении */
+}
+
+body .slider .ui-widget-content {
+  background-color: darken(@main-background, 10%); /* Цвет незаполненной части */
+  border-radius: 5px;
+}
+
+body .slider .ui-slider-handle {
+  background-color: #d7d7d7; /* Цвет ползунка */
+  border: 2px solid @element-background;
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 50%; /* Круглый ползунок */
+  cursor: pointer;
+}
+
+input, button, .ui-button {
+  &.main-button {
+    .shadowing();
+    .bordering();
+    margin: 0 4% 4% 2%;
+    background-color: lighten(@element-background, 10%);
+    color: @text-color;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: @element-background;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      color: white;
+      transition-duration: 0.3s;
+    }
+
+    &:disabled {
+      background-color: darken(@main-background, 10%);
+      cursor: not-allowed;
+      color: lighten(@text-color, 20%);
+    }
+  }
+
+  &[type=button] {
+    .shadowing();
+    .bordering();
+
+    &.r-button {
+      margin: 0 5px 0 0;
+      width: 2em;
+      height: auto;
+    }
+  }
+}
+
+div {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-around;
+
+  &.input-container {
+    justify-content: flex-start;
+    margin: 10px;
+  }
+
+  &.input-area {
+    flex-flow: nowrap;
+  }
+}
+
+.input-area {
+  margin: 5px 10px;
+}
+
+table {
+  &.main-table {
+    border-collapse: collapse;
+    margin: 20px;
+    width: 100%;
+    text-align: center;
+
+    th {
+      background: color-mix(in srgb, @element-background 50%, @main-background);
+      color: @text-color;
+      padding: 15px;
+    }
+
+    tr {
+      &:nth-of-type(odd) {
+        background-color: darken(@main-background, 10%);
+      }
+    }
+  }
+}
+
+.success {
+  color: @green-status;
+}
+
+.fail {
+  color: @red-status;
+}
+
+// Скрыть последние два столбца на узких экранах
+@media (max-width: 600px) {
+  .hide-me {
+    display: none;
+  }
+}

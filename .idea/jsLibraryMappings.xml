@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main" libraries="{less}" />
-    <file url="file://$PROJECT_DIR$/src/main" libraries="{less}" />
+    <file url="file://$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main" libraries="{less, sweetalert2}" />
+    <file url="file://$PROJECT_DIR$/src/main" libraries="{less, sweetalert2}" />
   </component>
 </project>

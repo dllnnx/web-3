@@ -9,45 +9,46 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/jsf/html">
 
 <h:head>
-    <h:outputScript name="dots/scripts/CanvasPrinter.js"/>
-    <h:outputScript name="dots/scripts/onetime.js"/>
-
     <!-- Библиотека компиляции less -->
     <link rel="stylesheet/less" type="text/css" href="resources/dots/styles/styles.less" />
-    <script src="https://cdn.jsdelivr.net/npm/less" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/less" />
 
     <!-- Библиотека SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"/>
 
-    <title>Сиразетдинов Азат | Веб программиирование</title>
+    <title>lab3</title>
 </h:head>
 <h:body>
     <header>
-        <h1>Сиразетдинов Азат. P3216 Вариант 3856</h1>
+        <h1>Денисова Алена. P3211 Вариант 21051</h1>
     </header>
     <div id="main-container">
         <div id="form-container">
-            <h:form>
+            <h:form id="formId">
                 <div class="input-container" id="X-input-container">
-                    <p:outputLabel styleClass="form-label" for="@next" value="Выберите X:"/>
-                    <p:selectOneMenu styleClass="X-input input-area" value="#{pointHandler.point.x}">
-                        <f:selectItem itemLabel="-2" itemValue="-2"/>
-                        <f:selectItem itemLabel="-1.5" itemValue="-1.5"/>
-                        <f:selectItem itemLabel="-1" itemValue="-1"/>
-                        <f:selectItem itemLabel="-0.5" itemValue="-0.5"/>
-                        <f:selectItem itemLabel="0" itemValue="0"/>
-                        <f:selectItem itemLabel="0.5" itemValue="0.5"/>
-                        <f:selectItem itemLabel="1" itemValue="1"/>
-                        <f:selectItem itemLabel="1.5" itemValue="1.5"/>
-                        <f:selectItem itemLabel="2" itemValue="2"/>
-                        <f:ajax/>
-                    </p:selectOneMenu>
+                    <p:outputLabel styleClass="form-label" for="xSlider" value="Выберите X:"/>
+                    <h:outputText id="outputX"
+                                  value="#{pointHandler.point.x}"
+                                  styleClass="x-value-label bordering shadowing"
+                                  style="width: 50px; margin-left: 7px; font-size: 18px"/>
+                    <h:inputHidden id="xInput" value="#{pointHandler.point.x}"/>
+                    <p:slider for="xInput"
+                              id="xSlider"
+                              display="outputX"
+                              minValue="-2"
+                              maxValue="2"
+                              step="0.5"
+                              styleClass="slider shadowing bordering"
+                              style="width:327px; background-color: #dfd3e3; border-radius: 10px; border-color: #684b8c">
+                    <p:ajax onevent="slideEnd"  listener="#{pointHandler.point.onSlideEndX}"/>
+                    </p:slider>
                 </div>
+
                 <div class="input-container" id="Y-input-container">
-                    <p:outputLabel  styleClass="form-label" for="@next" value="Выберите Y:"/>
+                    <p:outputLabel styleClass="form-label" for="@next" value="Выберите Y:"/>
                     <h:inputText id="Y-input"
                                  name="Y-input"
-                                 type="text"
+                                 type="number"
                                  value="#{pointHandler.point.y}"
                                  styleClass="Y-input input-area"
                                  required="false"
@@ -60,40 +61,43 @@
                     <h:message for="Y-input" id="Y-value-message"/>
                 </div>
                 <div class="input-container" id="R-input-container">
-                    <p:outputLabel styleClass="form-label" for="@next" value="Выберите R:"/>
-                    <div class="input-area">
-                        <h:commandButton value="1" type="button" styleClass="r-button">
-                            <f:ajax onevent="canvasPrinter.redrawAll(1)" render="r" listener="#{pointHandler.point.setR(1)}"/>
-                        </h:commandButton>
-                        <h:commandButton value="1.5" type="button" styleClass="r-button">
-                            <f:ajax onevent="canvasPrinter.redrawAll(1.5)" render="r" listener="#{pointHandler.point.setR(1.5)}"/>
-                        </h:commandButton>
-                        <h:commandButton value="2" type="button" styleClass="r-button">
-                            <f:ajax onevent="canvasPrinter.redrawAll(2)" render="r" listener="#{pointHandler.point.setR(2)}"/>
-                        </h:commandButton>
-                        <h:commandButton value="2.5" type="button" styleClass="r-button">
-                            <f:ajax onevent="canvasPrinter.redrawAll(2.5)" render="r" listener="#{pointHandler.point.setR(2.5)}"/>
-                        </h:commandButton>
-                        <h:commandButton value="3" type="button" styleClass="r-button">
-                            <f:ajax onevent="canvasPrinter.redrawAll(3)" render="r" listener="#{pointHandler.point.setR(3)}"/>
-                        </h:commandButton>
-                    </div>
+                    <p:outputLabel styleClass="form-label" for="rSlider" value="Выберите R:"/>
+
+                    <h:outputText id="rValue"
+                                  value="#{pointHandler.point.r}"
+                                  styleClass="x-value-label bordering shadowing"
+                                  style="width: 50px; margin-left: 7px; font-size: 18px"/>
+                    <h:inputHidden id="rInput" value="#{pointHandler.point.r}"/>
+                    <p:slider for="rInput"
+                              id="rSlider"
+                              display="rValue"
+                              minValue="2"
+                              maxValue="5"
+                              step="0.25"
+                              styleClass="slider shadowing bordering"
+                              style="width:327px; background-color: #dfd3e3; border-radius: 10px; border-color: #684b8c">
+                        <p:ajax onevent="slideEnd"  listener="#{pointHandler.point.onSlideEndR}" update="graphPanel"/>
+                    </p:slider>
                 </div>
+
                 <div class="input-container" id="buttons-container">
                     <h:button value="Назад" styleClass="surfing-button main-button" outcome="go-to-index" id="go_to_index_button"/>
-                    <!--                    <h:commandButton type="button"-->
-                    <!--                                     ajax="false"-->
-                    <!--                                     id="clear"-->
-                    <!--                                     styleClass="main-button"-->
-                    <!--                                     value="Очистить"-->
-                    <!--                                     update="table @form graphPanel"-->
-                    <!--                                     action="#{pointHandler.clear()}"/>-->
-                    <h:commandButton type="submit"
-                                     id="check"
-                                     styleClass="main-button"
-                                     value="Проверить"
-                                     action="#{pointHandler.add()}"/>
+                    <p:commandButton
+                            id="check"
+                            styleClass="main-button"
+                            value="Проверить"
+                            action="#{pointHandler.add()}"
+                            update="table graphPanel"
+                            process="@form" />
+                    <p:commandButton
+                            value="Очистить"
+                            action="#{pointHandler.clear}"
+                            update="table graphPanel"
+                            styleClass="surfing-button main-button"
+                    />
+
                 </div>
+
             </h:form>
         </div>
         <div id="graph-container">
@@ -116,11 +120,11 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Результат</f:facet>
-                    <h:outputText styleClass="#{point.statusHTMLClass}" id="status" value="#{point.statusString}"/>
+                    <h:outputText styleClass="#{point.isHitHTMLClass}" id="status" value="#{point.isHitToString()}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Текущее время</f:facet>
-                    <h:outputText id="time" value="#{point.time}"/>
+                    <h:outputText id="time" value="#{point.startTime}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Время работы (мкс)</f:facet>
@@ -131,12 +135,14 @@
     </div>
     <h:panelGroup id="graphPanel">
         <h:outputScript>
-            canvasPrinter.redrawAll(canvasPrinter.lastClickedR);
+            if(canvasPainter) canvasPainter.redrawAll(${pointHandler.point.r});
         </h:outputScript>
     </h:panelGroup>
 
     <p:remoteCommand name="addAttempt" action="#{pointHandler.addFromJS()}" update="table" process="@this"/>
     <p:remoteCommand name="updateGraph" update="graphPanel" process="@this"/>
-    <p:remoteCommand name="checkUpdate" action="#{pointHandler.loadPointsFromDb()}" update="checkUpdate" process="@this"/>
+    <h:outputScript name="dots/scripts/CanvasPainter.js"/>
+    <h:outputScript name="dots/scripts/onetime.js"/>
+    <p:remoteCommand name="getR" action="${pointHandler.point.r}" update="graphPanel" process="@this"/>
 </h:body>
 </html>
